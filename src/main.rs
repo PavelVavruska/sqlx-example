@@ -7,7 +7,7 @@ use sqlx;
 use actix_web::web::Data;
 use actix_web::{web, App, HttpServer, Responder, HttpResponse};
 
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
 
 /// Task  
@@ -17,7 +17,7 @@ use serde::Deserialize;
 ///	id int NOT NULL GENERATED ALWAYS AS IDENTITY
 /// );
 /// 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Serialize)]
 struct Task {
     description: String,
 }
@@ -32,10 +32,7 @@ async fn list_view(data: Data<Mutex<MyPool>>) -> impl Responder {
     )
     .fetch_all(&my_pool.pool) // -> Vec<Task>
     .await.unwrap();
-
-    let output: String = tasks.iter().map(|x| x.description.to_owned() + ", ").collect();
-   
-    HttpResponse::Ok().body(format!("Tasks to do: {}", output))
+    web::Json(tasks)
 }
 
 

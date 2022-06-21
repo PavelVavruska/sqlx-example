@@ -2,6 +2,18 @@
 
 A sample project using PostreSQL DB in Docker container from SQLx Rust Toolkit.
 
+## API
+
+```
+/
+```
+   - GET: list all tasks as JSON
+
+```
+/add
+```
+   - POST: add new task into DB using form (`application/x-www-form-urlencoded`)
+
 ## How To Build It ?
 
 Download Rust compiler from [here](https://www.rust-lang.org/en-US/), change the working directory to the root of this project, then execute the following command:
